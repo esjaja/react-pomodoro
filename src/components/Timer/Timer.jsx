@@ -103,10 +103,12 @@ class Timer extends React.Component {
 			color: 'inherit',
 		};
 		let isActive = this.state.isActive;
-		let skipButton = typeof this.props.handleSkip === 'function' ? <><br></br>
-				<Button variant="info" onClick={() => this.onSkip(this.state.counter)}>
+		let skipButton = typeof this.props.handleSkip === 'function' ? 
+				<Button style={style} variant="info" onClick={() => this.onSkip(this.state.counter)}>
 						Skip
-				</Button> </>: null;
+				</Button> : <Button style={style} variant="info" onClick={() => this.onReset()}>
+					Reset
+				</Button>;
 		return (
 			<>
 			<ButtonGroup>
@@ -136,16 +138,13 @@ class Timer extends React.Component {
 						Start
 					</Button>
 				)}
-				<Button variant="info" onClick={() => this.onReset()}>
-					Reset
-				</Button>
+				{skipButton}
 				{typeof this.props.handleRemove === 'function' && (
 					<Button variant="outline-danger" onClick={() => this.props.handleRemove()}>
 						x
 					</Button>
 				)}
 			</ButtonGroup>
-			{skipButton}
 			</>
 		);
 	}

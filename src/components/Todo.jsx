@@ -32,7 +32,9 @@ export default class Todo extends React.Component {
                         <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
                             {this.props.headerText}
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="0">{todoList}</Accordion.Collapse>
+                        <Accordion.Collapse eventKey="0">
+                            <Card.Body>{todoList}</Card.Body>
+                        </Accordion.Collapse>
                     </Card>
                 </Accordion>;
         return (

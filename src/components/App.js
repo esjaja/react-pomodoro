@@ -27,28 +27,11 @@ var App = () => {
 					<Navbar.Brand>HELLO</Navbar.Brand>
 				</Navbar>
 				<Row style={{height: '100vh'}}>     
-					{show && <Col xs={3} height={'100vh'}>
-						<Sidebar width={300} height={'100vh'}>
-							<ListGroup>
-								<ListGroup.Item>HE</ListGroup.Item>
-								<ListGroup.Item>HE</ListGroup.Item>
-								<ListGroup.Item>HE</ListGroup.Item>
-								<ListGroup.Item>HE</ListGroup.Item>
-								<ListGroup.Item>HE</ListGroup.Item>
-							</ListGroup>
-						</Sidebar>
-					</Col>
-					}
-					<Col xs={6}>
+					<Col></Col>
+					<Col xs={10} md={6}>
 						<SessionController wantToDo="Watch netflix"></SessionController>
 					</Col>
 					<Col>
-						<CustomHeading level="3" text="123">
-							HELLO
-						</CustomHeading>
-						<Card>
-                            <Card.Body>123</Card.Body>
-						</Card>
 					</Col>
 				</Row>
 			</Container>

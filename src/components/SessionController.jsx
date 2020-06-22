@@ -1,7 +1,7 @@
 import React from 'react';
 import Timer from './Timer/Timer.jsx';
 import Todo from './Todo.jsx';
-import {Badge} from 'react-bootstrap';
+import {Badge, Form} from 'react-bootstrap';
 import _ from 'lodash';
 
 export default class SessionController extends React.Component {
@@ -31,7 +31,7 @@ export default class SessionController extends React.Component {
 			});
 		} else {
 			this.setState({
-				isInFocusMode: true,
+				isInFocusMode: true
 			});
 		}
 	}
@@ -43,8 +43,6 @@ export default class SessionController extends React.Component {
 	}
 
 	handleToggleTodo(id, remove) {
-		console.log(remove)
-		console.log(id)
 		var todos = this.state.todo.slice();
 		if(remove === 'remove') {
 			todos = todos.filter((item) => item.id !== id);
@@ -111,19 +109,20 @@ export default class SessionController extends React.Component {
 				{timer}
 				<p>Current Session: {this.state.currentSession}</p>
                 
-                <p>Oops! Some new idea flew in my mind. Don't worry, just note it down here...</p>
-				<input
+                {/* <p>Oops! Some new idea flew in my mind. Don't worry, just note it down here...</p> */}
+				<Form.Control
+					style={{marginBottom: '20px', display: 'block'}}
 					type="text"
 					name="todoText"
 					autoComplete="off"
 					value={this.state.todoText}
-                    placeholder='note down something'
+                    placeholder='+ Add new task ...'
 					onChange={(e) => this.handleChange(e)}
 					onKeyDown={(e) => this.handleKeyDown(e)}
-				></input>
+				></Form.Control>
 				<Todo 
                 todo={this.state.todo} 
-                headerText='Pop-up thoughts'
+                headerText='Todo'
                 toggleTodo={(id, remove) => this.handleToggleTodo(id, remove)}></Todo>
 			</>
 		);
@@ -131,7 +130,7 @@ export default class SessionController extends React.Component {
 }
 
 var HeadingBadge = ({level, isInFocusMode, children, needToDo, wantToDo}) => {
-    let description = isInFocusMode ? 'Go on! This task is to ' : 'Good job! Take some rest or ';
+    let description = isInFocusMode ? 'Focus on ' : 'Good job! Take a rest or ';
     let badgeText = isInFocusMode ? needToDo : wantToDo;
     let H = 'h' + level;
     return (

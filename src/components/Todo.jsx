@@ -9,8 +9,8 @@ export default class Todo extends React.Component {
         super(props);
     }
 
-    toggleTodo(id) {
-        this.props.toggleTodo(id);
+    toggleTodo(id, remove) {
+        this.props.toggleTodo(id, remove);
     }
 
     render() {
@@ -20,7 +20,7 @@ export default class Todo extends React.Component {
                     return <ToggleTodo 
                         key={item.id} 
                         isDone={item.isDone} 
-                        onClick={() => this.toggleTodo(item.id)}
+                        onClick={(remove) => this.toggleTodo(item.id, remove)}
                         >
                         {item.text}
                     </ToggleTodo>

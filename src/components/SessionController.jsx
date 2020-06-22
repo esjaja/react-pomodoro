@@ -42,14 +42,21 @@ export default class SessionController extends React.Component {
 		});
 	}
 
-	handleToggleTodo(id) {
+	handleToggleTodo(id, remove) {
+		console.log(remove)
+		console.log(id)
 		var todos = this.state.todo.slice();
-		todos = todos.map((item) => {
-			if (item.id === id) {
-				item.isDone = !item.isDone;
-			}
-			return item;
-		});
+		if(remove === 'remove') {
+			todos = todos.filter((item) => item.id !== id);
+		}
+		else {
+			todos = todos.map((item) => {
+				if (item.id === id) {
+					item.isDone = !item.isDone;
+				}
+				return item;
+			});
+		}
 		this.setState({
 			todo: todos,
 		});
@@ -108,6 +115,7 @@ export default class SessionController extends React.Component {
 				<input
 					type="text"
 					name="todoText"
+					autoComplete="off"
 					value={this.state.todoText}
                     placeholder='note down something'
 					onChange={(e) => this.handleChange(e)}
@@ -116,7 +124,7 @@ export default class SessionController extends React.Component {
 				<Todo 
                 todo={this.state.todo} 
                 headerText='Pop-up thoughts'
-                toggleTodo={(id) => this.handleToggleTodo(id)}></Todo>
+                toggleTodo={(id, remove) => this.handleToggleTodo(id, remove)}></Todo>
 			</>
 		);
 	}

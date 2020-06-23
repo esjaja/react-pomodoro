@@ -1,6 +1,6 @@
 import React from 'react';
 import { ToggleTodo } from './Layout/ToggleTodo.jsx';
-import {Accordion, Button, Card} from 'react-bootstrap';
+import {Accordion, Card} from 'react-bootstrap';
 // import {todo} from './todo';
 import _ from 'lodash';
 
@@ -29,10 +29,10 @@ export default class Todo extends React.Component {
                 </ol>;
         let toRender = this.props.noHeader ? todoList : <Accordion>
                     <Card>
-                        <Accordion.Toggle as={Card.Header} variant="link" eventKey="0">
+                        <Accordion.Toggle className='todo-title' as={Card.Header} variant="link" eventKey="0">
                             {this.props.headerText}
                         </Accordion.Toggle>
-                        <Accordion.Collapse eventKey="0">
+                        <Accordion.Collapse className='todo-item' eventKey="0">
                             <Card.Body>{todoList}</Card.Body>
                         </Accordion.Collapse>
                     </Card>

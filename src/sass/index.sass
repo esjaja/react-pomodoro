@@ -1,38 +1,106 @@
 
 @import "~bootstrap/scss/bootstrap"
 
+
+$BADGE_COLOR: #5c3605
+$SECONDARY_COLOR: #92c0c0
+$BACKGROUND_COLOR: #f1efef
+$HEADER_COLOR: #e06b18
+
+$MD_FZ: 20px
+$BADGE_FZ: 25px
+
 body
-    height: 1200px
+    // height: 1200px
     padding-top: 70px
+    background-color: $BACKGROUND_COLOR
 
-.side-bar 
-    height: 100% !important
-    display: flex
-    flex-direction: column
-    border-right: 1px solid
-    border-radius: 0
-    border-color: rgba(64, 194, 133, 0.693)
-    background-color: rgb(255, 255, 255)
-    transition: 0.8s ease
+.page-header
+    background-color: $SECONDARY_COLOR
+    color: $HEADER_COLOR
+    font-weight: 900
 
-.toggle-menu 
-    height: 50px
-    border-top-right-radius: 10rem
-    border-bottom-right-radius: 9rem
-    width: 10px
-    position: absolute
-    outline: none
-    z-index: 1
-    background-color: rgba(64, 194, 133, 0.693)
-    border-color: rgba(64, 194, 133, 0.693)
-    border-left: 0
+.session
+    background-color: $BADGE_COLOR
+    color: $BACKGROUND_COLOR
 
-.delete-button
-    color: red
-    border: 1px solid red
-    border-radius: 3px
-    padding: 0px 5px
-    cursor: pointer
+.timer-text
+    font-size: 70px
+    text-align: center
+    font-weight: 700
+    color: $HEADER_COLOR
+
+.task-badge
+    background-color: $BADGE_COLOR
+    color: $BACKGROUND_COLOR
+    font-size: $BADGE_FZ
+    display: block
+    border-radius: 25px
+    box-shadow: 3px 3px 3px #888
+    font-weight: 900
+.task-text
+    color: $HEADER_COLOR
+    font-size: $MD_FZ
+    font-weight: 700
+
+.add-task-input
+    background-color: $BACKGROUND_COLOR
+    color: $HEADER_COLOR
+    font-weight: bold
+    font-size: $MD_FZ
+    border: 2px dashed $BADGE_COLOR
+    border-radius: 20px
+    padding: 20px
+    margin-bottom: 20px
+    &::placeholder
+        color: lighten($SECONDARY_COLOR, 10)
+
+.todo-title
+    background-color: $SECONDARY_COLOR
+    color: $BADGE_COLOR
+    font-weight: 900
+    font-size: $MD_FZ
+    user-select: none
+.todo-item
+    color: $BADGE_COLOR
+    font-size: $MD_FZ
+    font-weight: 700
+.todo-li
+    vertical-align: middle
+    user-select: none
     &:hover
-        background-color: red
-        color: white
+        background-color: $BACKGROUND_COLOR
+.todo-delete-button
+    float: right
+    line-height: 25px
+    text-align: center
+    padding: 0px 10px
+    border-radius: 50%
+    cursor: pointer
+    z-index: 10
+    &:hover
+        color: $HEADER_COLOR
+
+.start-button, .pause-button, .reset-button, .skip-button
+    font-size: $MD_FZ
+    font-weight: 600
+    border: none
+    padding: 10px 10px
+    border-radius: 20px
+
+.start-button
+    @include button-variant($HEADER_COLOR, $SECONDARY_COLOR, darken($HEADER_COLOR, 10), $SECONDARY_COLOR,darken($HEADER_COLOR, 20),$SECONDARY_COLOR)
+
+.reset-button, .skip-button
+    @include button-variant($SECONDARY_COLOR, $HEADER_COLOR, darken($SECONDARY_COLOR, 10), $HEADER_COLOR,darken($SECONDARY_COLOR, 20),$HEADER_COLOR)
+
+.pause-button
+    @include button-variant($BADGE_COLOR, $SECONDARY_COLOR, darken($BADGE_COLOR, 3), $SECONDARY_COLOR,darken($BADGE_COLOR, 5) ,$SECONDARY_COLOR)
+   
+
+
+@media all and (max-width: 700px)
+    .task-badge
+        font-size: 20px
+    .todo-title, .todo-item, .add-task-input
+        font-size: 17px

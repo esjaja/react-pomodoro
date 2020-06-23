@@ -1,7 +1,7 @@
 import React from 'react';
 import Timer from './Timer/Timer.jsx';
 import Todo from './Todo.jsx';
-import {Badge, Form} from 'react-bootstrap';
+import {Badge, Form, Container, Row, Col} from 'react-bootstrap';
 import _ from 'lodash';
 
 export default class SessionController extends React.Component {
@@ -10,7 +10,7 @@ export default class SessionController extends React.Component {
 		this.todoId = 0;
 		this.state = {
 			wantToDo: this.props.wantToDo || 'enjoy the rest!',
-			needToDo: this.props.needToDo || 'focus on current task',
+			needToDo: this.props.needToDo || 'things I need to do',
 			focusTime: this.props.focusTime || 25,
             breakTime: this.props.breakTime || 5,
             additionalBreakTime: 0,
@@ -86,58 +86,95 @@ export default class SessionController extends React.Component {
     }
 
 	render() {
-		let text = <HeadingBadge 
-        level="1" 
-        isInFocusMode={this.state.isInFocusMode}
-        needToDo={this.state.needToDo}
-        wantToDo={this.state.wantToDo}
-        ></HeadingBadge>
+		let text = (
+			<HeadingBadge
+				level="1"
+				isInFocusMode={this.state.isInFocusMode}
+				needToDo={this.state.needToDo}
+				wantToDo={this.state.wantToDo}
+				handleChange={(e) => this.handleChange(e)}
+			></HeadingBadge>
+		);
 
-
-        let breakTime = ((this.state.currentSession % 4) === 0) ? this.state.longBreakTime : this.state.breakTime;
-        breakTime += this.state.additionalBreakTime;
+		let breakTime =
+			this.state.currentSession % 4 === 0 ? this.state.longBreakTime : this.state.breakTime;
+		breakTime += this.state.additionalBreakTime;
 		let timer = this.state.isInFocusMode ? (
-			<Timer key={this.state.focusTime} min={this.state.focusTime} timerCopmlete={() => this.onTimerSuccess()} />
+			<Timer
+				key={this.state.focusTime}
+				min={this.state.focusTime}
+				timerCopmlete={() => this.onTimerSuccess()}
+			/>
 		) : (
-			<Timer handleSkip={(add) => {this.handleSkip(add)}} key={breakTime} min={breakTime} timerCopmlete={() => this.onTimerSuccess()} />
+			<Timer
+				handleSkip={(add) => {
+					this.handleSkip(add);
+				}}
+				key={breakTime}
+				min={breakTime}
+				timerCopmlete={() => this.onTimerSuccess()}
+			/>
 		);
 
 		return (
-			<>
-            {text}
-				
+			<Container>
+				{text}
 				{timer}
-				<p>Current Session: {this.state.currentSession}</p>
-                
-                {/* <p>Oops! Some new idea flew in my mind. Don't worry, just note it down here...</p> */}
+				<Col style={{ marginTop: '10px', marginBottom: '10px' }}>
+					<h4>
+						<Badge className="session" size="lg" variant="secondary">
+							Current Session <Badge variant="light">{this.state.currentSession}</Badge>
+						</Badge>
+					</h4>
+				</Col>
 				<Form.Control
-					style={{marginBottom: '20px', display: 'block'}}
+					className="add-task-input"
 					type="text"
 					name="todoText"
 					autoComplete="off"
 					value={this.state.todoText}
-                    placeholder='+ Add new task ...'
+					placeholder="+ Add new task ..."
 					onChange={(e) => this.handleChange(e)}
 					onKeyDown={(e) => this.handleKeyDown(e)}
 				></Form.Control>
-				<Todo 
-                todo={this.state.todo} 
-                headerText='Todo'
-                toggleTodo={(id, remove) => this.handleToggleTodo(id, remove)}></Todo>
-			</>
+				<Todo
+					todo={this.state.todo}
+					headerText="Todo"
+					toggleTodo={(id, remove) => this.handleToggleTodo(id, remove)}
+				></Todo>
+			</Container>
 		);
 	}
 }
 
-var HeadingBadge = ({level, isInFocusMode, children, needToDo, wantToDo}) => {
+var HeadingBadge = ({level, isInFocusMode, children, needToDo, wantToDo, handleChange}) => {
     let description = isInFocusMode ? 'Focus on ' : 'Good job! Take a rest or ';
     let badgeText = isInFocusMode ? needToDo : wantToDo;
     let H = 'h' + level;
-    return (
-        <H>
-            {description} 
-            <Badge variant="secondary"> {badgeText} </Badge>
-            ...
+    let inputStyle = {
+		whiteSpace: 'nowrap',
+		background: 'transparent',
+		border: 'none',
+		color: 'inherit',
+		fontSize: 'inherit',
+		fontFamily: 'inherit',
+		fontWeight: 'inherit',
+		textAlign: 'center'
+	};
+	let inputName = isInFocusMode ? 'needToDo' : 'wantToDo';
+	
+	return (
+        <H className='task-container'>
+            <span className='task-text'>{description}</span> 
+            <Badge className='task-badge' variant="secondary"> 
+			<input
+				style={inputStyle}
+				value={badgeText}
+				name={inputName}
+				onChange={(e) => handleChange(e)}
+			>
+			</input> 	
+			</Badge>
             {children}
         </H>
     )

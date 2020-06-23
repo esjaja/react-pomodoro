@@ -1,6 +1,6 @@
 import * as timer from './utils';
 import React from 'react';
-import { ButtonGroup, Button } from 'react-bootstrap';
+import { Button, Row, Container, Col } from 'react-bootstrap';
 
 class Timer extends React.Component {
 	constructor(props) {
@@ -54,6 +54,7 @@ class Timer extends React.Component {
 		}, () => {
 			if(this.state.counter < 0) {
 				this.onReset();
+				if(typeof this.props.handleSkip === 'function') this.props.handleSkip(0);
 				if (typeof this.props.timerCopmlete === 'function') this.props.timerCopmlete();
 			}
 		});
@@ -94,25 +95,25 @@ class Timer extends React.Component {
 
 	render() {
 		let [min, sec] = timer.getClock(this.state.counter);
-		let style = { width: '4rem' };
 		let inputStyle = {
 			whiteSpace: 'nowrap',
-			width: (min.length + 1) * 8 + 'px',
+			width: (min.length) * 40 + 'px',
 			background: 'transparent',
 			border: 'none',
 			color: 'inherit',
 		};
 		let isActive = this.state.isActive;
 		let skipButton = typeof this.props.handleSkip === 'function' ? 
-				<Button style={style} variant="info" onClick={() => this.onSkip(this.state.counter)}>
+				<Button block className='skip-button' variant="info" onClick={() => this.onSkip(this.state.counter)}>
 						Skip
-				</Button> : <Button style={style} variant="info" onClick={() => this.onReset()}>
+				</Button> : <Button block className='reset-button' variant="info" onClick={() => this.onReset()}>
 					Reset
 				</Button>;
 		return (
 			<>
-			<ButtonGroup>
-				<Button variant="outline-success">
+				<Container fluid>
+				<Row>
+					<Col className='timer-text'>
 					<input
 						value={min}
 						style={inputStyle}
@@ -127,24 +128,24 @@ class Timer extends React.Component {
 						name="sec"
 						disabled={isActive}
 						onChange={(e) => this.handleChange(e)}
-					></input>
-				</Button>
-				{this.state.isActive ? (
-					<Button style={style} variant="warning" onClick={() => this.onPause()}>
-						Pause
-					</Button>
-				) : (
-					<Button style={style} variant="success" onClick={() => this.onStart()}>
-						Start
-					</Button>
-				)}
-				{skipButton}
-				{typeof this.props.handleRemove === 'function' && (
-					<Button variant="outline-danger" onClick={() => this.props.handleRemove()}>
-						x
-					</Button>
-				)}
-			</ButtonGroup>
+					></input></Col>
+				</Row>
+					{this.state.isActive ? (
+						<Button block className='pause-button' variant="warning" onClick={() => this.onPause()}>
+							Pause
+						</Button>
+					) : (
+						<Button block className='start-button' variant="success" onClick={() => this.onStart()}>
+							Start
+						</Button>
+					)}
+					{skipButton}
+					{typeof this.props.handleRemove === 'function' && (
+						<Button block variant="outline-danger" onClick={() => this.props.handleRemove()}>
+							x
+						</Button>
+					)}
+				</Container>
 			</>
 		);
 	}
